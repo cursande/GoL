@@ -21,68 +21,33 @@ class Board
   def find_live_neighbours(row, col)
     # count neighbours that are ON/alive
     cell = grid[row, col]
-    total_live_n = 0
-
-    # TODO: would be much cleaner ways to scan neighbours by separating counting neighbours + checking if it's a valid neighbour
-    total_live_n += check_vertical_cells(row, col)
-    total_live_n += check_left_cells(row, col)
-    total_live_n += check_right_cells(row, col)
-
-    cell.is_on ? cell.check_on_cell(total_live_n) : cell.check_off_cell(total_live_n)
-  end
-
-  def check_vertical_cells(row, col)
     live_n = 0
 
-    if row > 0
-      # check up
-      live_n += 1 if grid[row - 1, col].is_on == true
-    end
+    neighbours = [
+      [row - 1, col], # up
+      [row + 1, col], # down
+      [row - 1, col - 1], # up-left
+      [row, col - 1], # left
+      [row + 1, col - 1], # down-left
+      [row - 1, col + 1], # up-right
+      [row, col + 1], # right
+      [row + 1, col + 1] # down-right
+    ]
 
-    if row < grid.row_count - 1
-      # check down
-      live_n += 1 if grid[row + 1, col].is_on == true
-    end
-    live_n
+    neighbours.each { |row, col| live_n += count_valid_cell(row, col) }
+    cell.toggle_cell_state(live_n)
   end
 
-  def check_left_cells(row, col)
-    live_n = 0
-
-    if col > 0
-      # check left
-      live_n += 1 if grid[row, col - 1].is_on == true
-
-      if row > 0
-        # check upper left
-        live_n += 1 if grid[row - 1, col - 1].is_on == true
-      end
-
-      if row < grid.row_count - 1
-        # check lower left
-        live_n += 1 if grid[row + 1, col - 1].is_on == true
-      end
+  def count_valid_cell(row, col)
+    # Ensure cell being checked is in grid, return 1 if it's ON/alive
+    if row == -1 || row == grid.row_count
+      0
+    elsif col == -1 || col == grid.column_count
+      0
+    elsif grid[row, col].is_on == false
+      0
+    else
+      1
     end
-    live_n
-  end
-
-  def check_right_cells(row, col)
-    live_n = 0
-
-    if col < grid.column_count - 1
-      # check right
-      live_n += 1 if grid[row, col + 1].is_on == true
-
-      if row > 0
-        # check upper right
-        live_n += 1 if grid[row - 1, col + 1].is_on == true
-      end
-
-      if row < grid.row_count - 1
-        # check lower right
-        live_n += 1 if grid[row + 1, col + 1].is_on == true
-      end
-    end
-    live_n
   end
 end

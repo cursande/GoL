@@ -10,8 +10,7 @@ require 'matrix'
 # puts "number of columns? \n"
 # cols = gets STDIN.chomp
 
-rows = 20
-cols = 20
+rows, cols = 25, 25
 
 # start initial board before loop, cells are randomly ON or OFF
 start_grid = Matrix.build(rows, cols) { Cell.new(rand(2) == 1) }
