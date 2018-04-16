@@ -10,11 +10,11 @@ require 'matrix'
 # puts "number of columns? \n"
 # cols = gets STDIN.chomp
 
-rows = 25
-cols = 25
+rows = 20
+cols = 20
 
 # start initial board before loop, cells are randomly ON or OFF
-start_grid = Matrix.build(rows, cols) { Cell.new(rand(2) == 1) }.to_a
+start_grid = Matrix.build(rows, cols) { Cell.new(rand(2) == 1) }
 board = Board.new(start_grid)
 
 loop do

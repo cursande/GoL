@@ -6,8 +6,8 @@ require 'colorize'
 class Draw
   def self.draw_table(grid)
     table = Terminal::Table.new
-    grid.each do |row|
-      printed_row = row.map { |cell| cell.is_on ? '■'.colorize(:red) : '.' }
+    grid.column_vectors.each do |row|
+      printed_row = row.map { |cell| cell.is_on ? '■'.colorize(:red) : '-' }
       table.add_row(printed_row)
     end
     table
