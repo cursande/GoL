@@ -13,7 +13,7 @@ require 'matrix'
 rows, cols = 25, 25
 
 # start initial board before loop, cells are randomly ON or OFF
-start_grid = Matrix.build(rows, cols) { Cell.new(rand(2) == 1) }
+start_grid = Matrix.build(rows, cols) { rand(2) == 1 }
 board = Board.new(start_grid)
 
 loop do
@@ -25,6 +25,6 @@ loop do
   new_grid = board.check_each_cell_status
   new_board = Board.new(new_grid)
   board = new_board
-  system 'clear' 
+  system 'clear'
 end
 
